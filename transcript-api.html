@@ -1,0 +1,953 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deal Intelligence Stack - Comparativo Final</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        height: 350px;
+        margin: 0 auto;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 400px;
+        }
+      }
+      .card {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      .badge {
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+      }
+      .badge-green {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .badge-red {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .badge-blue {
+        background-color: #e0f2fe;
+        color: #075985;
+      }
+      .badge-yellow {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .badge-gray {
+        background-color: #f1f5f9;
+        color: #475569;
+      }
+
+      .custom-scroll::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+      }
+      .custom-scroll::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+
+      .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #94a3b8;
+        margin: 0.5rem auto;
+      }
+      .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50">
+    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg">
+      <div
+        class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div>
+          <h1 class="text-xl font-bold">Transcrição + analise de contexto</h1>
+          <p class="text-xs text-slate-400">
+            Comparativo em 3 Camadas: Captura → Transcrição → Análise
+          </p>
+        </div>
+        <div class="text-right hidden md:block">
+          <div class="flex gap-2 text-xs font-mono">
+            <span class="bg-slate-800 px-2 py-1 rounded text-sky-400"
+              >1. Bot</span
+            >
+            <span class="text-slate-500">→</span>
+            <span class="bg-slate-800 px-2 py-1 rounded text-purple-400"
+              >2. Brain (ASR)</span
+            >
+            <span class="text-slate-500">→</span>
+            <span class="bg-slate-800 px-2 py-1 rounded text-emerald-400"
+              >3. LLM</span
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-12">
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 font-bold border border-sky-200"
+          >
+            1
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800">
+              Camada de Captura (Meeting Bots)
+            </h2>
+            <p class="text-sm text-slate-500">
+              Infraestrutura para entrar no Zoom/Teams/Meet e extrair o vídeo.
+            </p>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden p-0">
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse min-w-[1000px]">
+              <thead>
+                <tr
+                  class="bg-sky-50/50 text-slate-500 text-xs uppercase tracking-wider border-b border-sky-100"
+                >
+                  <th class="p-4 w-40">Fornecedor</th>
+                  <th class="p-4 w-32 text-center">Whitelabel?</th>
+                  <th class="p-4 w-48">Nível da API & DX</th>
+                  <th class="p-4 w-40">Custo Estimado</th>
+                  <th class="p-4">Veredito Técnico</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm divide-y divide-slate-100">
+                <!-- Recall.ai -->
+                <tr class="bg-sky-50/20">
+                  <td class="p-4 font-bold text-sky-700">Recall.ai</td>
+                  <td class="p-4 text-center">
+                    <span class="badge badge-green">Sim (Total)</span>
+                    <div class="text-[10px] text-slate-400 mt-1">
+                      Bot com seu nome
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="badge badge-purple">Enterprise / Robusta</span>
+                    <p class="text-[11px] text-slate-500 mt-1">
+                      API muito madura, mas complexa. SDKs excelentes. Curva de
+                      aprendizado média.
+                    </p>
+                  </td>
+                  <td class="p-4 text-xs text-slate-600">
+                    Alto (Fixo + Var)<br />~$500 fixo + min
+                  </td>
+                  <td class="p-4 text-xs leading-relaxed">
+                    Escolha se você precisa de estabilidade 99.9% e suporte
+                    rápido. É a infra usada por grandes players (HubSpot, etc).
+                    O bot entra invisível e a API raramente falha nas
+                    atualizações do Zoom.
+                  </td>
+                </tr>
+                <!-- Meeting Baas -->
+                <tr>
+                  <td class="p-4 font-bold text-slate-700">Meeting Baas</td>
+                  <td class="p-4 text-center">
+                    <span class="badge badge-green">Sim (Total)</span>
+                  </td>
+                  <td class="p-4">
+                    <span class="badge badge-blue">Moderna / REST</span>
+                    <p class="text-[11px] text-slate-500 mt-1">
+                      API simples e direta. Documentação clara, fácil de testar
+                      com cURL.
+                    </p>
+                  </td>
+                  <td class="p-4 text-xs text-slate-600">
+                    Zero Fixo<br />Pay-as-you-go
+                  </td>
+                  <td class="p-4 text-xs leading-relaxed">
+                    Clone funcional do Recall.ai sem a taxa fixa. Ideal para
+                    começar MVP. A estabilidade é ótima, mas o suporte pode ser
+                    mais lento que o Recall em crises.
+                  </td>
+                </tr>
+                <!-- Skribby -->
+                <tr>
+                  <td class="p-4 font-bold text-slate-700">Skribby</td>
+                  <td class="p-4 text-center">
+                    <span class="badge badge-green">Sim (Total)</span>
+                  </td>
+                  <td class="p-4">
+                    <span class="badge badge-green">Dev-First / Simples</span>
+                    <p class="text-[11px] text-slate-500 mt-1">
+                      Focada em "Zero Config". Você chama o endpoint e o bot
+                      entra. DX excelente para times pequenos.
+                    </p>
+                  </td>
+                  <td class="p-4 text-xs text-slate-600">
+                    Baixo<br />~$0.35/hora
+                  </td>
+                  <td class="p-4 text-xs leading-relaxed">
+                    Velocidade de desenvolviment. Menos features complexas que o
+                    Recall, mas resolve o básico perfeitamente.
+                  </td>
+                </tr>
+                <!-- Attendee -->
+                <tr>
+                  <td class="p-4 font-bold text-slate-700">Attendee</td>
+                  <td class="p-4 text-center">
+                    <span class="badge badge-yellow">Parcial</span>
+                    <div class="text-[10px] text-slate-400 mt-1">
+                      Depende do plano
+                    </div>
+                  </td>
+                  <td class="p-4">
+                    <span class="badge badge-red">Fragmentada</span>
+                    <p class="text-[11px] text-slate-500 mt-1">
+                      API poderosa mas com documentação menos estruturada. Exige
+                      mais "tratamento de erros" do seu lado.
+                    </p>
+                  </td>
+                  <td class="p-4 text-xs text-slate-600">
+                    Híbrido<br />Variável
+                  </td>
+                  <td class="p-4 text-xs leading-relaxed">
+                    Funciona bem para integrações muito específicas onde você
+                    precisa de controle granular de eventos, mas exige um time
+                    de engenharia mais sênior para manter estável.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <!-- CAMADA 2: CÉREBROS (TRANSCRIÇÃO) -->
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold border border-purple-200"
+          >
+            2
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800">
+              Camada de Processamento (ASR)
+            </h2>
+            <p class="text-sm text-slate-500">
+              Quem transforma Áudio em Texto e identifica "Quem falou"?
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- AssemblyAI -->
+          <div class="card border-t-4 border-t-purple-500 relative">
+            <span class="absolute top-2 right-2 badge badge-green"
+              >Qualidade Pro</span
+            >
+            <h3 class="font-bold text-lg mb-2">AssemblyAI</h3>
+            <ul class="text-xs space-y-2 text-slate-600">
+              <li>
+                ✅ <strong>Diarização:</strong> Excelente separação de falantes.
+              </li>
+              <li>
+                ✅ <strong>Pontuação:</strong> Texto limpo, remove "humm",
+                "ehh".
+              </li>
+              <li>
+                ❌ <strong>Biometria:</strong> Não identifica nomes (só Speaker
+                A/B).
+              </li>
+              <li>💰 <strong>Preço:</strong> ~$0.37/hora (Premium).</li>
+            </ul>
+          </div>
+
+          <!-- Azure Speech -->
+          <div class="card border-t-4 border-t-blue-500 relative bg-blue-50/30">
+            <span class="absolute top-2 right-2 badge badge-blue"
+              >Único c/ Biometria</span
+            >
+            <h3 class="font-bold text-lg mb-2">Azure AI Speech</h3>
+            <ul class="text-xs space-y-2 text-slate-600">
+              <li>
+                ✅ <strong>Voice ID:</strong> Identifica "João" vs "Maria" (com
+                cadastro prévio).
+              </li>
+              <li>
+                ✅ <strong>Integração:</strong> Nativo no ecossistema Microsoft.
+              </li>
+              <li>
+                ⚠️ <strong>Complexidade:</strong> API mais difícil de
+                implementar.
+              </li>
+              <li>💰 <strong>Preço:</strong> ~$1.00/hora (Standard).</li>
+            </ul>
+          </div>
+
+          <!-- OpenAI Whisper -->
+          <div class="card border-t-4 border-t-slate-500 relative">
+            <span class="absolute top-2 right-2 badge badge-red"
+              >Commodity</span
+            >
+            <h3 class="font-bold text-lg mb-2">OpenAI Whisper</h3>
+            <ul class="text-xs space-y-2 text-slate-600">
+              <li>
+                ✅ <strong>Custo:</strong> O mais barato (ou grátis
+                self-hosted).
+              </li>
+              <li>
+                ⚠️ <strong>Diarização:</strong> Ruim nativamente (precisa de
+                bibliotecas extras como Pyannote).
+              </li>
+              <li>
+                ❌ <strong>Qualidade Raw:</strong> Entrega texto cru, sem
+                formatação rica.
+              </li>
+              <li>
+                💰 <strong>Preço:</strong> ~$0.006/min (API) ou Custo GPU.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAMADA 3: INTELIGÊNCIA (LLM) -->
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold border border-emerald-200"
+          >
+            3
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800">
+              Camada de Análise (LLM / RAG)
+            </h2>
+            <p class="text-sm text-slate-500">
+              Quem analisa o texto + contratos para gerar o Insight?
+            </p>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden p-0">
+          <div class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left border-collapse min-w-[800px]">
+              <thead>
+                <tr
+                  class="bg-emerald-50/50 text-slate-500 text-xs uppercase tracking-wider border-b border-emerald-100"
+                >
+                  <th class="p-4 w-40">Modelo</th>
+                  <th class="p-4">Diferencial para Deals</th>
+                  <th class="p-4">Janela de Contexto (Quantos docs?)</th>
+                  <th class="p-4">Por que usar?</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm divide-y divide-slate-100">
+                <!-- AssemblyAI LeMUR -->
+                <tr class="bg-purple-50/30">
+                  <td class="p-4 font-bold text-purple-700">
+                    AssemblyAI LeMUR
+                  </td>
+                  <td class="p-4 text-xs">
+                    <strong>Integração Nativa.</strong> Ele recebe o timestamp
+                    do áudio. Se você pergunta "O que ele disse sobre preço?", o
+                    LeMUR pode te dar o segundo exato no áudio.
+                  </td>
+                  <td class="p-4 text-xs">
+                    Limitada (Focada na sessão atual).
+                  </td>
+                  <td class="p-4 text-xs">
+                    Para análises rápidas pós-reunião onde você precisa linkar o
+                    texto de volta ao áudio player.
+                  </td>
+                </tr>
+                <!-- Gemini 1.5 Pro -->
+                <tr>
+                  <td class="p-4 font-bold text-blue-700">Gemini 1.5 Pro</td>
+                  <td class="p-4 text-xs">
+                    <strong>Contexto Infinito.</strong> Você pode jogar 50
+                    reuniões passadas + 10 contratos em PDF e perguntar: "Qual a
+                    contradição histórica desse founder?".
+                  </td>
+                  <td class="p-4 text-xs">
+                    <strong>2 Milhões de Tokens.</strong> (Gigante)
+                  </td>
+                  <td class="p-4 text-xs">
+                    Para "Due Diligence" profunda analisando histórico de meses.
+                  </td>
+                </tr>
+                <!-- GPT-4o -->
+                <tr>
+                  <td class="p-4 font-bold text-green-700">GPT-4o</td>
+                  <td class="p-4 text-xs">
+                    <strong>Raciocínio Lógico.</strong> Melhor em nuances sutis
+                    de negociação e sentimento.
+                  </td>
+                  <td class="p-4 text-xs">128k Tokens (Padrão).</td>
+                  <td class="p-4 text-xs">
+                    Para gerar o resumo executivo final e emails de follow-up
+                    perfeitos.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAMINHOS DE ARQUITETURA -->
+      <section class="mt-16">
+        <h2 class="section-title text-slate-800">
+          <span class="text-2xl">🛤️ Caminhos de Arquitetura</span>
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- ONLINE -->
+          <div class="space-y-4">
+            <h3
+              class="font-bold text-sky-700 text-lg border-b border-sky-200 pb-2 mb-4"
+            >
+              Reuniões Online (Bots)
+            </h3>
+            <!-- Path 1 -->
+            <div
+              class="card p-4 border-l-4 border-l-sky-500 relative hover:shadow-md transition"
+            >
+              <div class="mb-2">
+                <span class="box-bot">Recall</span>
+                <span class="path-arrow">→</span>
+                <span class="box-bot">Transcrição Nativa</span>
+                <span class="path-arrow">→</span>
+                <span class="box-llm">LLM</span>
+              </div>
+              <p class="text-xs text-slate-600">
+                <strong>MVP Rápido.</strong> Menor custo e complexidade.
+                Qualidade média.
+              </p>
+            </div>
+            <!-- Path 3 -->
+            <div
+              class="card p-4 border-l-4 border-l-emerald-500 relative hover:shadow-md transition bg-emerald-50/30"
+            >
+              <div class="mb-2">
+                <span class="box-bot">Recall / Baas</span>
+                <span class="path-arrow">→</span>
+                <span class="box-asr">AssemblyAI</span>
+                <span class="path-arrow">→</span>
+                <span class="box-llm">Gemini</span>
+              </div>
+              <p class="text-xs text-slate-600">
+                Melhor transcrição + Melhor cérebro.
+              </p>
+            </div>
+            <!-- Path 4 -->
+            <div
+              class="card p-4 border-l-4 border-l-blue-500 relative hover:shadow-md transition"
+            >
+              <div class="mb-2">
+                <span class="box-bot">Recall</span>
+                <span class="path-arrow">→</span>
+                <span class="box-azure">Azure Speech</span>
+                <span class="path-arrow">→</span>
+                <span class="box-llm">LLM</span>
+              </div>
+              <p class="text-xs text-slate-600">
+                Compliance e segurança Enterprise.
+              </p>
+            </div>
+          </div>
+          <!-- FÍSICO -->
+          <div class="space-y-4">
+            <h3
+              class="font-bold text-indigo-700 text-lg border-b border-indigo-200 pb-2 mb-4"
+            >
+              Reuniões Físicas
+            </h3>
+            <!-- Path Physical 1 -->
+            <div
+              class="card p-4 border-l-4 border-l-indigo-600 relative hover:shadow-md transition bg-indigo-50/30"
+            >
+              <div class="absolute top-2 right-2 badge badge-blue">
+                Biometria
+              </div>
+              <div class="mb-2">
+                <span
+                  class="bg-slate-200 px-2 rounded text-xs font-bold text-slate-700"
+                  >Mic</span
+                >
+                <span class="path-arrow">→</span>
+                <span class="box-azure">Azure (Voice ID)</span>
+                <span class="path-arrow">→</span>
+                <span class="box-llm">LLM</span>
+              </div>
+              <p class="text-xs text-slate-600">
+                Único que diz
+                <em>quem</em> falou o que via biometria.
+              </p>
+            </div>
+            <!-- Path Physical 3 -->
+            <div
+              class="card p-4 border-l-4 border-l-emerald-500 relative hover:shadow-md transition"
+            >
+              <div class="mb-2">
+                <span
+                  class="bg-slate-200 px-2 rounded text-xs font-bold text-slate-700"
+                  >Mic</span
+                >
+                <span class="path-arrow">→</span>
+                <span class="box-asr">AssemblyAI</span>
+                <span class="path-arrow">→</span>
+                <span class="box-llm">LLM</span>
+              </div>
+              <p class="text-xs text-slate-600">
+                Diarização (A/B) + Inteligência.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOVO: GRÁFICOS QUANTITATIVOS -->
+      <section class="mt-16">
+        <h2 class="section-title text-slate-800">
+          <span class="text-2xl">📊 Análise Quantitativa</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Bubble Chart -->
+          <div class="card">
+            <h3 class="font-bold text-slate-700 mb-4 text-sm uppercase">
+              Esforço de Implementação vs. Qualidade
+            </h3>
+            <div class="chart-wrapper">
+              <canvas id="effortChart"></canvas>
+            </div>
+            <p class="text-xs text-center text-slate-400 mt-2">
+              Tamanho da Bolha = Custo de Manutenção
+            </p>
+          </div>
+          <!-- Line Chart -->
+          <div class="card">
+            <h3 class="font-bold text-slate-700 mb-4 text-sm uppercase">
+              Custo Médio Mensal (USD)
+            </h3>
+            <div class="chart-wrapper">
+              <canvas id="costLineChart"></canvas>
+            </div>
+            <p class="text-xs text-center text-slate-400 mt-2">
+              Comparando Custo Fixo (Recall) vs Variável (Baas/Físico)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Demo Section (Solicitação 3) -->
+      <section id="gemini-demo" class="mt-16 pt-8 border-t border-slate-200">
+        <div
+          class="card bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8 border border-sky-500/30"
+        >
+          <h2 class="text-2xl font-bold text-white mb-2">
+            Simulador de Qualidade & Análise
+          </h2>
+          <p class="text-xs text-slate-400 mb-6">
+            Compare a qualidade do texto bruto vs. texto processado e gere a
+            análise.
+          </p>
+
+          <!-- Duelo de Qualidade (Novo) -->
+          <div
+            class="mb-8 p-4 bg-slate-800/50 rounded-lg border border-slate-700"
+          >
+            <h3
+              class="text-sky-400 text-sm font-bold uppercase mb-4 flex items-center gap-2"
+            >
+              <span>🔍 Duelo de Transcrição:</span>
+              <span class="text-xs font-normal text-slate-400 normal-case"
+                >Vale a pena pagar pela API Pro?</span
+              >
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Lado A: Padrão -->
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-xs text-slate-400"
+                    >Padrão (Recall/Whisper Basic)</label
+                  >
+                  <span class="badge badge-red">Texto Bruto</span>
+                </div>
+                <div
+                  class="h-32 bg-slate-900/80 p-3 rounded text-[11px] font-mono text-slate-400 border border-slate-700/50 overflow-y-auto leading-relaxed"
+                >
+                  então a gente achou que 15 milhões é muito... tipo assim a
+                  receita não ta la essas coisas ne... e tem o churn que ta
+                  subindo. acho que uns 12 seria melhor se voces garantirem que
+                  nao sai ninguem.
+                  <br /><br />
+                  ta bom john a gente entende mas fechamos contratos novos
+                  semana passada.
+                </div>
+                <p class="text-[10px] text-red-400 mt-1 italic">
+                  Problemas: Sem identificação de quem fala, pontuação ruim,
+                  números por extenso, vícios de linguagem ("tipo assim").
+                </p>
+              </div>
+
+              <!-- Lado B: Pro -->
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-xs text-sky-400"
+                    >Pro (AssemblyAI/Azure)</label
+                  >
+                  <span class="badge badge-green"
+                    >Formatado & Identificado</span
+                  >
+                </div>
+                <div
+                  class="h-32 bg-slate-900 p-3 rounded text-[11px] font-mono text-slate-200 border border-sky-500/30 overflow-y-auto leading-relaxed shadow-lg shadow-sky-900/20"
+                >
+                  <span class="text-sky-500 font-bold">John (Investidor):</span>
+                  A avaliação de <span class="text-green-400">$15M</span> está
+                  alta. A receita atual não justifica, e o Churn está subindo.
+                  Aceitamos <span class="text-green-400">$12M</span> se
+                  garantirem retenção.<br /><br />
+                  <span class="text-purple-400 font-bold"
+                    >Sarah (Founder):</span
+                  >
+                  Entendo, John. Mas fechamos contratos novos semana passada que
+                  impactam o ARR.
+                </div>
+                <p class="text-[10px] text-green-400 mt-1 italic">
+                  Vantagens: Speaker ID claro, formatação de moeda ($), remoção
+                  de "lixo", pronto para o LLM.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulador de Análise -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6 border-t border-slate-700"
+          >
+            <div class="space-y-4">
+              <label class="block text-sky-400 text-xs font-semibold uppercase"
+                >Gerar Relatório de Deal (IA)</label
+              >
+              <p class="text-xs text-slate-500 mb-2">
+                A IA usará a versão "Pro" para gerar insights.
+              </p>
+
+              <!-- Inputs Escondidos visualmente mas usados pela logica -->
+              <textarea id="transcriptInput" class="hidden">
+[00:05] John (Sócio): Valuation de 15M está alto para a receita atual.
+[00:12] Sarah (Founder): Temos contratos enterprise novos fechados semana passada.
+[00:45] John (Sócio): Se o churn for <5%, aceitamos 12M com warrant de 20%.</textarea
+              >
+              <textarea id="contextInput" class="hidden">
+Contexto: Fundo tem teto de 14M. Foco em Churn e Retenção.</textarea
+              >
+
+              <!-- <div -->
+              <!--   class="flex items-center gap-2 mb-2 p-3 bg-slate-800 rounded border border-slate-700" -->
+              <!-- > -->
+              <!--   <input -->
+              <!--     type="checkbox" -->
+              <!--     id="forceSimulation" -->
+              <!--     class="rounded bg-slate-700 border-slate-500 text-sky-500" -->
+              <!--     checked -->
+              <!--   /> -->
+              <!--   <label -->
+              <!--     for="forceSimulation" -->
+              <!--     class="text-xs text-slate-300 cursor-pointer" -->
+              <!--     >Modo Apresentação (Seguro/Simulado)</label -->
+              <!--   > -->
+              <!-- </div> -->
+
+              <button
+                id="analyzeBtn"
+                class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 px-4 rounded transition shadow-lg shadow-sky-900/50 flex items-center justify-center gap-2"
+              >
+                <span>✨ Analisar com IA</span>
+              </button>
+            </div>
+            <div class="relative flex flex-col h-full">
+              <div
+                id="outputArea"
+                class="flex-grow bg-slate-950 border border-slate-700 rounded-lg p-4 text-xs text-slate-300 font-mono whitespace-pre-wrap min-h-[200px]"
+              >
+                <p class="text-slate-600 opacity-50 text-center mt-16">
+                  Clique em Analisar para ver o resultado do Deal...
+                </p>
+              </div>
+              <div
+                id="loadingOverlay"
+                class="absolute inset-0 bg-slate-900/90 hidden flex items-center justify-center backdrop-blur-sm rounded-lg"
+              >
+                <span class="text-sky-400 text-xs animate-pulse font-bold"
+                  >Processando Deal...</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Chart Configuration -->
+    <script>
+      // --- Chart Logic ---
+      document.addEventListener("DOMContentLoaded", function () {
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = "#64748b";
+
+        // 1. Bubble Chart: Effort vs Quality
+        const ctxEffort = document
+          .getElementById("effortChart")
+          .getContext("2d");
+        new Chart(ctxEffort, {
+          type: "bubble",
+          data: {
+            datasets: [
+              {
+                label: "Cenários",
+                data: [
+                  {
+                    x: 2,
+                    y: 5,
+                    r: 8,
+                    name: "Online MVP (Recall Nativo)",
+                    type: "Online",
+                  },
+                  {
+                    x: 5,
+                    y: 8,
+                    r: 10,
+                    name: "Online Pro (Recall+Assembly)",
+                    type: "Online",
+                  },
+                  {
+                    x: 7,
+                    y: 9,
+                    r: 12,
+                    name: "Online Best (Recall+Gemini)",
+                    type: "Online",
+                  },
+                  {
+                    x: 8,
+                    y: 7,
+                    r: 10,
+                    name: "Online Msft (Recall+Azure)",
+                    type: "Online",
+                  },
+                  {
+                    x: 4,
+                    y: 6,
+                    r: 8,
+                    name: "Físico Híbrido (Device+Assembly)",
+                    type: "Físico",
+                  },
+                  {
+                    x: 9,
+                    y: 10,
+                    r: 15,
+                    name: "Físico Biometria (Device+Azure)",
+                    type: "Físico",
+                  },
+                ],
+                backgroundColor: (ctx) => {
+                  const v = ctx.raw;
+                  if (!v) return "#ccc";
+                  return v.type === "Físico" ? "#4f46e5" : "#0ea5e9"; // Indigo vs Sky
+                },
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                min: 0,
+                max: 10,
+                title: { display: true, text: "Esforço de Dev (Baixo → Alto)" },
+              },
+              y: {
+                min: 0,
+                max: 12,
+                title: { display: true, text: "Qualidade/Inteligência" },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: { callbacks: { label: (c) => `${c.raw.name}` } },
+            },
+          },
+        });
+
+        // 2. Line Chart: Cost vs Volume
+        const ctxCost = document
+          .getElementById("costLineChart")
+          .getContext("2d");
+        new Chart(ctxCost, {
+          type: "line",
+          data: {
+            labels: ["10h", "100h", "500h", "1000h"], // Volume Hours
+            datasets: [
+              {
+                label: "Online Enterprise (Recall Stack)",
+                data: [520, 650, 1200, 2000], // High Fixed ($500) + Var
+                borderColor: "#0ea5e9",
+                backgroundColor: "#0ea5e9",
+                tension: 0.1,
+              },
+              {
+                label: "Online Challenger (Meeting Baas Stack)",
+                data: [10, 100, 500, 1000], // Zero Fixed + Var
+                borderColor: "#06b6d4", // Cyan
+                backgroundColor: "#06b6d4",
+                borderDash: [5, 5],
+                tension: 0.1,
+              },
+              {
+                label: "Físico Biometria (Azure API)",
+                data: [15, 150, 750, 1500], // Higher Var ($1.5/hr), Zero Fixed
+                borderColor: "#4f46e5", // Indigo
+                backgroundColor: "#4f46e5",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "Custo Mensal ($)" },
+              },
+            },
+          },
+        });
+      });
+    </script>
+
+    <!-- Logic for API/Simulation -->
+    <script type="module">
+      import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+      // =================================================================
+      // ÁREA DE CONFIGURAÇÃO MANUAL
+      const manualApiKey = "";
+      // =================================================================
+
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      const outputArea = document.getElementById("outputArea");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const forceSimulationCheckbox = { checked: true };
+      //document.getElementById("forceSimulation");
+
+      analyzeBtn.addEventListener("click", async () => {
+        const transcript = document.getElementById("transcriptInput").value;
+
+        loadingOverlay.classList.remove("hidden");
+        outputArea.innerHTML = "";
+
+        // Force Simulation Check
+        if (forceSimulationCheckbox.checked) {
+          await simulateResponse();
+          return;
+        }
+
+        // Real API Logic
+        let apiKey =
+          manualApiKey || localStorage.getItem("gemini_key_presentation");
+        if (!apiKey) {
+          apiKey = prompt("Chave API Google (Deixe vazio para Simulação):");
+          if (apiKey) localStorage.setItem("gemini_key_presentation", apiKey);
+          else {
+            await simulateResponse();
+            return;
+          }
+        }
+
+        try {
+          const genAI = new GoogleGenerativeAI(apiKey);
+          const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+          const prompt = `Analista VC Sênior. Contexto: ${document.getElementById("contextInput").value}. Transcript: ${transcript}. Relatório Markdown PT-BR: 1.Probabilidade 2.Valuation 3.Riscos 4.Ações`;
+
+          const result = await model.generateContent(prompt);
+          renderOutput((await result.response).text());
+        } catch (error) {
+          alert("Erro API. Usando Simulação.");
+          await simulateResponse();
+        }
+      });
+
+      async function simulateResponse() {
+        await new Promise((r) => setTimeout(r, 1500));
+        const mockResponse = `### 📊 Relatório de Deal (Simulação Pro)
+
+**1. Probabilidade:** <span class="text-sky-400 font-bold">MÉDIA-ALTA</span>
+Investidor engajou na negociação de termos específicos (Churn < 5%), superando a barreira inicial de valuation.
+
+**2. Valuation & Termos:**
+* **Ask:** $15M (Rejeitado)
+* **Bid:** $12M + 20% Warrant
+* **Trigger:** Churn abaixo de 5%
+
+**3. Riscos Críticos:**
+* Receita atual não sustenta valuation de 15M.
+* Necessidade de aprovação do conselho (Founder não tem autonomia total).
+
+**4. Próximos Passos:**
+* Enviar Cohort Analysis de retenção.
+* Validar estrutura de Warrant com jurídico.`;
+        renderOutput(mockResponse);
+      }
+
+      function renderOutput(text) {
+        loadingOverlay.classList.add("hidden");
+        outputArea.innerHTML = text
+          .replace(
+            /\*\*(.*?)\*\*/g,
+            '<span class="text-sky-400 font-bold">$1</span>',
+          )
+          .replace(
+            /^# (.*$)/gim,
+            '<h3 class="text-lg font-bold text-white mt-4 mb-2">$1</h3>',
+          )
+          .replace(
+            /^## (.*$)/gim,
+            '<h4 class="text-base font-bold text-white mt-3 mb-1">$1</h4>',
+          )
+          .replace(/^\* (.*$)/gim, '<li class="ml-4">$1</li>');
+      }
+    </script>
+  </body>
+</html>
